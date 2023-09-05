@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/04 19:50:49 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/05 15:54:50 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,21 @@
 
 typedef struct s_philo
 {
+	struct s_data	*data;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	int				id;
-	struct s_data	*data;
 }	t_philo;
 
 typedef struct s_data
 {
-	long int		start_time;
+	long long		start_time;
 	pthread_t		*th_id;
-	int				time_to_eat;
-	int				die;
-	int				eat;
-	int				sleep;
-	int				phil_nbr;
+	long int		time_to_eat;
+	long int		max_to_eat;
+	long int		time_to_die;
+	long int		time_to_sleep;
+	long int		phil_nbr;
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
 }					t_data;
@@ -58,5 +58,5 @@ int			ft_create_each_philo(t_data *data);
 void		cleanup(t_data *data);
 void		ft_take_fork(t_philo *philo);
 void		ft_unlock_fork(t_philo *philo);
-
+int			ft_usleep(useconds_t usec);
 #endif

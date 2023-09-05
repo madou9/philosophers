@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 17:22:14 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/02 15:28:23 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/05 14:51:22 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,20 @@ int main()
     example();
 
     return (0);
+}
+
+int	ft_usleep(useconds_t usec)
+{
+	useconds_t	before;
+	useconds_t	after;
+
+	before = ft_get_time();
+	after = before;
+	while (after - before < usec)
+	{
+		if (usleep(usec) == -1)
+			return (-1);
+		after = ft_get_time();
+	}
+	return (0);
 }

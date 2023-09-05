@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:11:32 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/04 19:19:50 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/05 12:39:22 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,10 @@ int main()
     example_2();
 
     return (0);
+}
+
+void log_philosopher_state(int philo_id, const char *state_msg, t_data *data)
+{
+    long int timestamp = ft_get_time() - data->start_time;
+    printf("%ld ms Philosopher %d %s\n", timestamp, philo_id, state_msg);
 }
