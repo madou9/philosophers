@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/06 17:26:02 by ihama            ###   ########.fr       */
+/*   Created: 2023/09/06 12:03:15 by ihama             #+#    #+#             */
+/*   Updated: 2023/09/06 20:05:33 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char *argv[])
+void	ft_check_die(t_philo *philo)
 {
-	t_data	*data;
-	int		i;
+	philo->last_meal_time = ft_get_time() - philo->data->start_time;
+	if (ft_get_time() - philo->last_meal_time > philo->data->time_to_die)
+		print_message("has died", philo);
+}
 
-	if (argc != 5 && argc != 6)
-		error_message("Error: more or less argument provied");
-	i = 1;
-	data = malloc(sizeof(t_data));
-	if (data == NULL)
-		exit(1);
-	while (i < argc)
+void	ft_check_die(t_philo *philo)
+{
+	philo->last_meal_time = ft_get_time() - philo->data->start_time;
+	if ((philo->data->time_to_eat + philo->data->time_to_sleep) < philo->data->time_to_die)
 	{
-		if (!ft_check_number(argv[i]))
-			error_message("Error: Numeric argument required");
-		i++;
+		ft_eat_meal(philo);
+		
 	}
-	ft_init_data(data, argc, argv);
-	ft_create_each_philo(data);
-	return (0);
 }

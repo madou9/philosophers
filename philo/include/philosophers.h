@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/05 15:54:50 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/06 19:57:31 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/time.h>
 # include <stdint.h>
 # include <stdio.h>
+# include <limits.h>
 # include <unistd.h>
 # include <pthread.h>
 # include "../libft/libft.h"
@@ -30,6 +31,7 @@
 typedef struct s_philo
 {
 	struct s_data	*data;
+	long int		last_meal_time;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	int				id;
@@ -46,17 +48,34 @@ typedef struct s_data
 	long int		phil_nbr;
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
+	pthread_mutex_t	wait_to_print;
 }					t_data;
 
+/*time thread */
 long int	ft_get_time(void);
+int			ft_usleep(useconds_t usec);
+
+/*init thread*/
 int			ft_fork_init(t_data *data);
-int			ft_check_number(char *str);
 int			ft_init_data(t_data *data, int argc, char **argv);
-void		error_message(char *msg);
+int			ft_init_philo(t_data *data);
+
+/*action routine */
 void		*routine(void *arg);
 int			ft_create_each_philo(t_data *data);
+void		ft_eat_meal(t_philo *philo);
+void		print_message(char *str, t_philo *philo);
+void		ft_check_die(t_philo *philo);
+
+/*take fork */
+void		drop_fork(t_philo *philo);
+int			take_right_fork(t_philo *philo);
+int			take_left_fork(t_philo *philo);
+int			ft_take_fork(t_philo *philo);
+
+/*tools thread */
+int			ft_check_number(char *str);
+void		error_message(char *msg);
 void		cleanup(t_data *data);
-void		ft_take_fork(t_philo *philo);
-void		ft_unlock_fork(t_philo *philo);
-int			ft_usleep(useconds_t usec);
+
 #endif

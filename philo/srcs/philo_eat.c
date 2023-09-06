@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo_eat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/06 17:26:02 by ihama            ###   ########.fr       */
+/*   Created: 2023/09/06 12:18:06 by ihama             #+#    #+#             */
+/*   Updated: 2023/09/06 19:54:40 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char *argv[])
+void	print_message(char *str, t_philo *philo)
 {
-	t_data	*data;
-	int		i;
+	long int	timestamp;
 
-	if (argc != 5 && argc != 6)
-		error_message("Error: more or less argument provied");
-	i = 1;
-	data = malloc(sizeof(t_data));
-	if (data == NULL)
-		exit(1);
-	while (i < argc)
-	{
-		if (!ft_check_number(argv[i]))
-			error_message("Error: Numeric argument required");
-		i++;
-	}
-	ft_init_data(data, argc, argv);
-	ft_create_each_philo(data);
-	return (0);
+	timestamp = ft_get_time() - philo->data->start_time;
+	pthread_mutex_lock(&philo->data->wait_to_print);
+	printf("%ld %d %s\n", timestamp, philo->id, str);
+	pthread_mutex_unlock(&philo->data->wait_to_print);
+}
+
+void	ft_eat_meal(t_philo *philo)
+{
+	print_message("is eating", philo);
+	ft_usleep(philo->data->time_to_eat);
 }

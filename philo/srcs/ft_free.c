@@ -1,35 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/06 17:26:02 by ihama            ###   ########.fr       */
+/*   Created: 2023/09/06 14:35:55 by ihama             #+#    #+#             */
+/*   Updated: 2023/09/06 14:37:10 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char *argv[])
+int	ft_check_number(char *str)
 {
-	t_data	*data;
-	int		i;
-
-	if (argc != 5 && argc != 6)
-		error_message("Error: more or less argument provied");
-	i = 1;
-	data = malloc(sizeof(t_data));
-	if (data == NULL)
-		exit(1);
-	while (i < argc)
+	if (!str)
+		return (0);
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str)
 	{
-		if (!ft_check_number(argv[i]))
-			error_message("Error: Numeric argument required");
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+void	error_message(char *msg)
+{
+	ft_putendl_fd(msg, 2);
+	exit(1);
+}
+
+void	cleanup(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->phil_nbr)
+	{
+		pthread_mutex_destroy(&data->fork[i]);
 		i++;
 	}
-	ft_init_data(data, argc, argv);
-	ft_create_each_philo(data);
-	return (0);
+	free(data->th_id);
+	free(data->philo);
 }
