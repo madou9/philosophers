@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/06 17:22:14 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/08 23:18:43 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	data->start_time = ft_get_time();
-	data->max_to_eat = -1;
 	if (argc == 6)
 		data->max_to_eat = ft_atoi(argv[5]);
 	else
 		data->max_to_eat = INT_MAX;
+	data->philo_died = 0;
 	pthread_mutex_init(&data->wait_to_print, NULL);
+	pthread_mutex_init(&data->get_num_philo, NULL);
 	data->th_id = malloc(sizeof(pthread_t) * data->phil_nbr);
 	data->philo = malloc(sizeof(t_philo) * data->phil_nbr);
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->phil_nbr);
@@ -70,6 +71,7 @@ int	ft_init_philo(t_data *data)
 	{
 		data->philo[i].data = data;
 		data->philo[i].id = i + 1;
+		pthread_mutex_init(&data->philo->lock, NULL);
 	}
 	return (0);
 }
@@ -84,7 +86,7 @@ int	ft_create_each_philo(t_data *data)
 	while (i < data->phil_nbr)
 	{
 		if (pthread_create(&data->th_id[i], NULL, &routine, &data->philo[i]))
-			cleanup(data);
+			return (1);
 		i++;
 	}
 	i = 0;
@@ -97,3 +99,13 @@ int	ft_create_each_philo(t_data *data)
 	cleanup(data);
 	return (0);
 }
+
+// int	get_nbr_philo(t_data *data)
+// {
+// 	int	nbr_philo;
+
+// 	pthread_mutex_lock(&data->get_num_philo);
+// 	nbr_philo = data->phil_nbr;
+// 	pthread_mutex_unlock(&data->get_num_philo);
+// 	return (0);
+// }

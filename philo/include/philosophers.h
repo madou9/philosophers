@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/06 19:57:31 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/08 23:15:52 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,20 @@ typedef struct s_philo
 {
 	struct s_data	*data;
 	long int		last_meal_time;
+	pthread_mutex_t	lock;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	int				id;
+	int				eating;
 }	t_philo;
 
 typedef struct s_data
 {
 	long long		start_time;
 	pthread_t		*th_id;
+	pthread_t		*ckeck_vie;
 	long int		time_to_eat;
+	int				philo_died;
 	long int		max_to_eat;
 	long int		time_to_die;
 	long int		time_to_sleep;
@@ -49,6 +53,7 @@ typedef struct s_data
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	wait_to_print;
+	pthread_mutex_t	get_num_philo;
 }					t_data;
 
 /*time thread */
@@ -61,11 +66,13 @@ int			ft_init_data(t_data *data, int argc, char **argv);
 int			ft_init_philo(t_data *data);
 
 /*action routine */
+int			get_nbr_philo(t_data *data);
 void		*routine(void *arg);
 int			ft_create_each_philo(t_data *data);
 void		ft_eat_meal(t_philo *philo);
 void		print_message(char *str, t_philo *philo);
-void		ft_check_die(t_philo *philo);
+bool		ft_check_die(t_philo *philo);
+bool		ft_check_eat(t_philo *philo);
 
 /*take fork */
 void		drop_fork(t_philo *philo);

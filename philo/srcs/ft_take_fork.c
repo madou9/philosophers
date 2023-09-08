@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:23:43 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/06 18:20:20 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/08 22:27:50 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	drop_fork(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
+	print_message("is sleeping", philo);
+	ft_usleep(philo->data->time_to_sleep);
 }
 
 int	take_right_fork(t_philo *philo)
