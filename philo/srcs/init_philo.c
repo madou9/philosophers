@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/08 23:18:43 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/09 14:57:57 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 		data->max_to_eat = INT_MAX;
 	data->philo_died = 0;
 	pthread_mutex_init(&data->wait_to_print, NULL);
-	pthread_mutex_init(&data->get_num_philo, NULL);
 	data->th_id = malloc(sizeof(pthread_t) * data->phil_nbr);
 	data->philo = malloc(sizeof(t_philo) * data->phil_nbr);
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->phil_nbr);
@@ -99,13 +98,3 @@ int	ft_create_each_philo(t_data *data)
 	cleanup(data);
 	return (0);
 }
-
-// int	get_nbr_philo(t_data *data)
-// {
-// 	int	nbr_philo;
-
-// 	pthread_mutex_lock(&data->get_num_philo);
-// 	nbr_philo = data->phil_nbr;
-// 	pthread_mutex_unlock(&data->get_num_philo);
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:53:03 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/08 22:28:54 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/09 14:58:27 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,15 @@ long int	ft_get_time(void)
 
 int	ft_usleep(useconds_t usec)
 {
-	useconds_t	before;
-	useconds_t	after;
+	long	before;
+	long	after;
 
 	before = ft_get_time();
-	after = before;
-	while (after - before < usec)
+	after = before + usec;
+	while (ft_get_time() < after)
 	{
-		if (usleep(usec) == -1)
+		if (usleep(50) == -1)
 			return (-1);
-		after = ft_get_time();
 	}
 	return (0);
 }

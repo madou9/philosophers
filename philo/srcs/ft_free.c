@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 14:35:55 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/06 14:37:10 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/09 13:07:21 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	cleanup(t_data *data)
 	while (i < data->phil_nbr)
 	{
 		pthread_mutex_destroy(&data->fork[i]);
+		pthread_mutex_destroy(&data->philo->lock);
 		i++;
 	}
 	free(data->th_id);

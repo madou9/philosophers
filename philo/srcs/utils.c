@@ -6,44 +6,30 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:03:15 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/08 23:27:21 by ihama            ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2023/09/09 14:26:51 by ihama            ###   ########.fr       */
+/*                             `                                               */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-bool	ft_check_die(t_philo *philo)
+void	ft_check_die(t_philo *philo)
 {
-	t_data	*data;
-	data = philo->data;
-	int	terminate;
-
-	terminate = 0;
-	philo->last_meal_time = ft_get_time() - philo->data->start_time;
-	// printf("\nreal time: %ld", ft_get_time());
-	// printf("\nstart_time: %lld", philo->data->start_time);
-	// printf("\nlast_meal_time: %ld\n", philo->last_meal_time);
-	// printf("\ntime_to_die: %ld\n", data->time_to_die);
-	// while (terminate == 0)
-	// {
-		pthread_mutex_lock(&philo->lock);
-		if (ft_get_time() >= data->time_to_die)
-		{
-			print_message("has died", philo);
-			exit(0);
-			return (true);
-		}
-		return (false);
-		terminate = data->philo_died;
-	// }
+	// pthread_mutex_lock(&philo->data->wait_to_print);
+	if (check_if_someone_died(philo) == 1)
+	{
+		print_message("has died", philo);
+		philo->data->philo_died = 1;
+	}
+	// pthread_mutex_unlock(&philo->data->wait_to_print);
 }
 
-// bool	ft_check_eat(t_philo *philo)
-// {
-// 	if (ft_get_time() >= philo->last_meal_time)
-// 	{
-// 		print_message("has died", philo);
-// 		return (true);
-// 	}
-// 	return (false);
-// }
+int	check_if_someone_died(t_philo *philo)
+{
+	if (ft_get_time() - philo->data->time_to_die > philo->last_meal_time)
+		return (1);
+	return (0);
+	// if (ft_get_time() > philo->data->time_to_die) // 600
+}
+
+	// printf("\ntime_to_die: %ld\n", philo->data->time_to_die);
+	// printf("\time_since_last_meal: %ld\n", time_since_last_meal);

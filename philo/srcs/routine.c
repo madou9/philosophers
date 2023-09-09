@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:53:07 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/08 22:34:36 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/09 15:00:19 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	*routine(void *arg)
 
 	i = 0;
 	philo = (t_philo *)arg;
+	pthread_mutex_init(&philo->lock, NULL);
 	context = philo->data;
 	while (i < context->max_to_eat)
 	{
 		print_message("is thinking", philo);
 		ft_eat_meal(philo);
-		drop_fork(philo);
 		ft_check_die(philo);
 		i++;
 	}
