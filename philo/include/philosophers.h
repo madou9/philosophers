@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/10 18:14:02 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/10 19:01:48 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_philo
 	long int		start_time;
 	long int		last_meal;
 	int				phil_nbr;
-	int				num_to_eat;
+	long int		num_to_eat;
 	int				philo_dead;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
@@ -60,7 +60,7 @@ void	error_message(char *msg);
 void	cleanup(t_data *data, pthread_mutex_t *fork);
 
 /*init philo */
-int		ft_init_data(t_philo *philo, char **argv);
+int		ft_init_data(t_philo *philo, int argc, char **argv);
 void	ft_init_philo(t_philo *philo, t_data *data);
 int		ft_fork_init(t_philo *philo, pthread_mutex_t *fork);
 int		ft_create_thread(t_data *data);

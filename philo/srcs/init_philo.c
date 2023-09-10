@@ -6,19 +6,19 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/10 18:17:02 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/10 19:08:25 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_init_data(t_philo *philo, char **argv)
+int	ft_init_data(t_philo *philo, int argc, char **argv)
 {
 	philo->phil_nbr = ft_atoi(argv[1]);
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
+	if (argc == 6)
 		philo->num_to_eat = ft_atoi(argv[5]);
 	else
 		philo->num_to_eat = INT_MAX;
@@ -69,12 +69,13 @@ int	ft_create_thread(t_data *data)
 {
 	int	i;
 
-	i = -1;
-	while (++i < data->philo->phil_nbr)
+	i = 0;
+	while (i < data->philo[i].phil_nbr)
 	{
 		if (pthread_create(&data->philo[i].thread, NULL, \
 			&routine, &data->philo[i]) != 0)
 			return (1);
+		i++;
 	}
 	i = 0;
 	while (i < data->philo[0].phil_nbr)

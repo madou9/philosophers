@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:18:06 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/10 17:14:14 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/10 19:11:29 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ int	ft_eat_meal(t_philo *philo)
 		one_philo(philo);
 		return (1);
 	}
-	pthread_mutex_lock(philo->wait_to_eat);
 	ft_take_fork(philo);
 	philo->eating = 1;
 	print_message("Is eating", philo);
+	pthread_mutex_lock(philo->wait_to_eat);
 	philo->last_meal = ft_get_time();
 	philo->is_eating++;
+	pthread_mutex_unlock(philo->wait_to_eat);
 	ft_usleep(philo->time_to_eat);
 	philo->eating = 0;
-	pthread_mutex_unlock(philo->wait_to_eat);
 	drop_fork(philo);
 	return (0);
 }
