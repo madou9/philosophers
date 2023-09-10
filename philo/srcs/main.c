@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/06 17:26:02 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/10 18:14:16 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 
 int	main(int argc, char *argv[])
 {
-	t_data	*data;
-	int		i;
+	t_philo			philo[PHILO_MAX];
+	pthread_mutex_t	forks[PHILO_MAX];
+	t_data			data;
+	int				i;
 
-	if (argc != 5 && argc != 6)
-		error_message("Error: more or less argument provied");
 	i = 1;
-	data = malloc(sizeof(t_data));
-	if (data == NULL)
-		exit(1);
+	if (argc != 5 && argc != 6)
+		error_message("Error: more or less argument provided");
 	while (i < argc)
 	{
 		if (!ft_check_number(argv[i]))
-			error_message("Error: Numeric argument required");
+			error_message("Error: NUmeric argument required");
 		i++;
 	}
-	ft_init_data(data, argc, argv);
-	ft_create_each_philo(data);
+	ft_init_data(philo, argv);
+	init_data(&data, philo);
+	ft_init_philo(philo, &data);
+	ft_fork_init(philo, forks);
+	ft_create_thread(&data);
+	cleanup(&data, forks);
 	return (0);
 }

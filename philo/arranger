@@ -1,0 +1,52 @@
+// void	eat(t_philo *philo)
+// {
+// 	pthread_mutex_lock(philo->r_fork);
+// 	print_message("has taken a fork", philo, philo->id);
+// 	if (philo->num_of_philos == 1)
+// 	{
+// 		ft_usleep(philo->time_to_die);
+// 		pthread_mutex_unlock(philo->r_fork);
+// 		return ;
+// 	}
+// 	pthread_mutex_lock(philo->l_fork);
+// 	print_message("has taken a fork", philo, philo->id);
+// 	philo->eating = 1;
+// 	print_message("is eating", philo, philo->id);
+// 	pthread_mutex_lock(philo->meal_lock);
+// 	philo->last_meal = get_current_time();
+// 	philo->meals_eaten++;
+// 	pthread_mutex_unlock(philo->meal_lock);
+// 	ft_usleep(philo->time_to_eat);
+// 	philo->eating = 0;
+// 	pthread_mutex_unlock(philo->l_fork);
+// 	pthread_mutex_unlock(philo->r_fork);
+// }
+
+// int main(int argc, char *argv[])
+// {
+//     int i;
+//     pthread_mutex_t forks[PHILO_MAX];
+
+//     i = 1; // Start from 1 to skip the program name
+//     if (argc != 5 && argc != 6)
+//         error_message("Error: Incorrect number of arguments provided");
+
+//     while (i < argc - 1) // Check all arguments except the last one
+//     {
+//         if (!ft_check_number(argv[i]))
+//             error_message("Error: Numeric argument required");
+//         i++;
+//     }
+
+//     if (argc == 6) // Check the last argument if provided
+//     {
+//         if (!ft_check_number(argv[argc - 1]))
+//             error_message("Error: Numeric argument required");
+//     }
+
+//     // Continue with your program logic, including initializing philosophers and forks.
+
+//     return (0);
+// }
+
+
