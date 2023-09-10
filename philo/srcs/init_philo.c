@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/10 19:08:25 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/10 19:20:22 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_create_thread(t_data *data)
 		i++;
 	}
 	i = 0;
-	while (i < data->philo[0].phil_nbr)
+	while (i < data->philo[i].phil_nbr)
 	{
 		if (pthread_join(data->philo[i].thread, NULL) != 0)
 			return (1);
