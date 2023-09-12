@@ -17,22 +17,29 @@ void	init_data(t_data *data, t_philo *philo)
 	data->dead_flag = 0;
 	data->philo = philo;
 	pthread_mutex_init(&data->wait_to_print, NULL);
+	pthread_mutex_init(&data->general, NULL);
 }
 
 void	*routine(void *arg)
 {
 	t_philo	*philo;
-	int i = 0;
 
 	philo = (t_philo *)arg;
-	if (philo->id % 2 == 0)
-		ft_think(philo);
-	while (ft_get_time() - philo->last_meal < philo->time_to_die)
+	// printf("ID = %d\n", philo->id);
+	// if (philo->id % 2 ==
+	// if (philo->id % 2 == 1)
+	// 	ft_usleep(2000);
+	while (1)
 	{
+		if (check_flag_died((t_philo *)philo->all))
+			return (NULL);
+
+		pthread_mutex_lock(philo->general);
+
 		ft_eat_meal(philo);
 		ft_sleep(philo);
 		ft_think(philo);
-		i++;
+		ft_usleep(100);
 	}
 	return (NULL);
 }

@@ -31,8 +31,17 @@ int	main(int argc, char *argv[])
 	ft_init_data(philo, argc, argv);
 	init_data(&data, philo);
 	ft_init_philo(philo, &data);
-	ft_fork_init(philo, forks);
+	ft_fork_init(philo, forks, argv);
 	ft_create_thread(&data);
+	while(1)
+	{
+		if (check_if_dead(philo, philo->phil_nbr))
+		{
+			print_message("is died", philo);
+			ft_usleep(6000);
+			exit(0);
+		}
+	}
 	ft_create_join(&data);
 	cleanup(&data, forks);
 	return (0);

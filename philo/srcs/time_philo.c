@@ -24,10 +24,7 @@ int	ft_usleep(useconds_t usec)
 	before = ft_get_time();
 	after = before + usec;
 	while (ft_get_time() < after)
-	{
-		if (usleep(50) == -1)
-			return (-1);
-	}
+		usleep(50);
 	return (0);
 }
 

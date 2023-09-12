@@ -42,7 +42,9 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*wait_to_print;
+	pthread_mutex_t	*general;
 	pthread_mutex_t	*lock;
+	void			*all;
 
 }					t_philo;
 
@@ -51,6 +53,7 @@ typedef struct s_data
 	int				dead_flag;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	wait_to_print;
+	pthread_mutex_t	general;
 	t_philo			*philo;
 }					t_data;
 
@@ -61,7 +64,7 @@ void	cleanup(t_data *data, pthread_mutex_t *fork);
 /*init philo */
 int		ft_init_data(t_philo *philo, int argc, char **argv);
 void	ft_init_philo(t_philo *philo, t_data *data);
-int		ft_fork_init(t_philo *philo, pthread_mutex_t *fork);
+int		ft_fork_init(t_philo *philo, pthread_mutex_t *fork, char **argv);
 int		ft_create_thread(t_data *data);
 int		ft_create_join(t_data *data);
 void	init_data(t_data *data, t_philo *philo);
@@ -86,5 +89,6 @@ int		ft_usleep(useconds_t usec);
 long	int	ft_get_time(void);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
-
+int check_if_dead(t_philo *philo, int number_philo);
+int check_flag_died(t_philo *philo);
 #endif

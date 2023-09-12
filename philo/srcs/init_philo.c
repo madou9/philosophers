@@ -26,12 +26,12 @@ int	ft_init_data(t_philo *philo, int argc, char **argv)
 	return (0);
 }
 
-int	ft_fork_init(t_philo *philo, pthread_mutex_t *fork)
+int	ft_fork_init(t_philo *philo, pthread_mutex_t *fork, char **argv)
 {
 	int	i;
 
 	i = -1;
-	while (++i < philo->phil_nbr)
+	while (++i < ft_atoi(argv[1]))
 		pthread_mutex_init(&fork[i], NULL);
 	i = 0;
 	philo[0].left_fork = &fork[0];
@@ -57,7 +57,9 @@ void	ft_init_philo(t_philo *philo, t_data *data)
 		philo[i].start_time = ft_get_time();
 		philo[i].last_meal = ft_get_time();
 		philo[i].philo_dead = data->dead_flag;
-		philo[i].wait_to_print = &data->wait_to_print;
+		philo[i].wait_to_print = &(data->wait_to_print);
+		philo[i].general = &(data->general);
+		philo[i].all = data->philo,
 		++i;
 	}
 }
@@ -65,11 +67,10 @@ void	ft_init_philo(t_philo *philo, t_data *data)
 int	ft_create_thread(t_data *data)
 {
 	int	i;
-	pthread_t	observer;
 
 	i = 0;
-	if (pthread_create(&data->philo->thread_1, NULL, routine_1, data->philo)!= 0)
-		return (1);
+	// if (pthread_create(&data->philo->thread_1, NULL, routine_1, data->philo)!= 0)
+	// 	return (1);
 	while (i < data->philo[0].phil_nbr)
 	{
 		if (pthread_create(&data->philo[i].thread, NULL, \

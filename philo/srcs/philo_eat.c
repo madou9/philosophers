@@ -55,6 +55,7 @@ int	ft_eat_meal(t_philo *philo)
 	pthread_mutex_lock(philo->right_fork);
 	print_message("has taken a fork", philo);
 	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_unlock(philo->general);
 	print_message("has taken a fork", philo);
 	philo->eating = 1;
 	print_message("is eating", philo);
