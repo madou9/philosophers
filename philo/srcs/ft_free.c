@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 14:35:55 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/10 19:17:37 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/12 14:15:14 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,11 @@ int	ft_check_number(char *str)
 	return (1);
 }
 
-void	error_message(char *msg)
-{
-	ft_putendl_fd(msg, 2);
-	exit(1);
-}
-
 void	cleanup(t_data *data, pthread_mutex_t *fork)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_destroy(&data->death_lock);
-	pthread_mutex_destroy(&data->wait_to_eat);
 	pthread_mutex_destroy(&data->wait_to_print);
 	while (i < data->philo[i].phil_nbr)
 	{
