@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:18:06 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/13 16:10:28 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/13 19:14:34 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	print_message(char *str, t_philo *philo)
 {
-	long long	timestamp;
+	long int	timestamp;
 
 	timestamp = ft_get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->wait_to_print);
-	printf("%llu %d %s\n", timestamp, philo->id, str);
+	printf("%ld %d %s\n", timestamp, philo->id, str);
 	pthread_mutex_unlock(&philo->data->wait_to_print);
 }
 
@@ -33,12 +33,27 @@ void	ft_sleep(t_philo *philo)
 	ft_usleep(philo->data->time_to_sleep);
 }
 
+void	ft_take_fork(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_message("has taken a fork", philo);
+		pthread_mutex_lock(philo->left_fork);
+		print_message("has taken a fork", philo);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_message("has taken a fork", philo);
+		pthread_mutex_lock(philo->right_fork);
+		print_message("has taken a fork", philo);
+	}
+}
+
 void	ft_eat_meal(t_philo *philo)
 {
-	pthread_mutex_lock(philo->right_fork);
-	print_message("has taken a fork", philo);
-	pthread_mutex_lock(philo->left_fork);
-	print_message("has taken a fork", philo);
+	ft_take_fork(philo);
 	philo->eating = 1;
 	print_message("is eating", philo);
 	pthread_mutex_lock(&philo->lock);

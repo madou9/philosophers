@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/13 15:25:50 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/13 18:55:23 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char *argv[])
 			write(2,"Error: Numeric argument required", 1);
 		i++;
 	}
-	ft_init_data(data, argc, argv);
+	ft_init_data(data, argv);
 	ft_init_philo(data);
 	ft_fork_init(data);
 	ft_create_each_philo(data);
