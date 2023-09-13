@@ -1,34 +1,23 @@
-int	phi_died(t_philoso *ph)
+void	eat(t_philo *philo)
 {
-	t_philo			*philos;
-
-	philos = ph->philo_data;
-	pthread_mutex_lock(&philos->print);
-	if (!philos->check)
+	pthread_mutex_lock(philo->r_fork);
+	print_message("has taken a fork", philo, philo->id);
+	if (philo->num_of_philos == 1)
 	{
-		printf("%lu %d %s\n", time_() - ph->ts, ph->phi_num, "is died");
-		philos->check = 1;
+		ft_usleep(philo->time_to_die);
+		pthread_mutex_unlock(philo->r_fork);
+		return ;
 	}
-	pthread_mutex_unlock(&philos->print);
-	return (1);
+	pthread_mutex_lock(philo->l_fork);
+	print_message("has taken a fork", philo, philo->id);
+	philo->eating = 1;
+	print_message("is eating", philo, philo->id);
+	pthread_mutex_lock(philo->meal_lock);
+	philo->last_meal = get_current_time();
+	philo->meals_eaten++;
+	pthread_mutex_unlock(philo->meal_lock);
+	ft_usleep(philo->time_to_eat);
+	philo->eating = 0;
+	pthread_mutex_unlock(philo->l_fork);
+	pthread_mutex_unlock(philo->r_fork);
 }
-
-int	any_philosopher_died(t_philo *philos)
-{
-	unsigned int	i;
-	unsigned long	t;
-
-	i = 0;
-	while (i < philos->num_philo)
-	{
-		pthread_mutex_lock(&philos->print);
-		t = philos->phi[i]->last_eat;
-		pthread_mutex_unlock(&philos->print);
-		if ((time_() - t)
-			>= (unsigned long)(philos->time_to_die))
-			return (phi_died(philos->phi[i]));
-		i++;
-	}
-	return (0);
-}
-
