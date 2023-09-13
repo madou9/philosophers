@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/13 22:09:29 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/13 22:31:50 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_fork_init(t_data *data)
 	while (i < data->phil_nbr)
 	{
 		data->philo[i].left_fork = &data->fork[i];
-		data->philo[i].right_fork = &data->fork[(i + 1)];
+		data->philo[i].right_fork = &data->fork[(i + 1) % data->phil_nbr];
 		++i;
 	}
 	return (0);
@@ -81,7 +81,7 @@ int	ft_init_philo(t_data *data)
 int	ft_create_each_philo(t_data *data)
 {
 	int			i;
-	long int	time;
+	// long int	time;
 
 	i = 0;
 	while (i < data->phil_nbr)
@@ -91,14 +91,12 @@ int	ft_create_each_philo(t_data *data)
 		i++;
 	}
 	i = 0;
-	while (i < data->phil_nbr && !data->philo[i].philo_died && data->philo->last_eat)
-	{
-		time = ft_get_time() - data->philo[i].last_eat;
-		if (check_dead(&data->philo[i], time))
-			break;
-			check_if_someone_died(&data->philo[i]);
-		i++;
-	}
+	// while (!data->philo[i % data->phil_nbr].philo_died && data->philo->last_eat)
+	// {
+	// 	time = ft_get_time() - data->philo[i % data->phil_nbr].last_eat;
+	// 	if (check_dead(&data->philo[i % data->phil_nbr], time))
+	// 		check_if_someone_died(&data->philo[i % data->phil_nbr]);
+	// }
 	while (i < data->phil_nbr)
 	{
 		if (pthread_join(data->th_id[i], NULL) != 0)
