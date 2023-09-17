@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/13 22:31:58 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/14 10:40:34 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char *argv[])
 	int		i;
 
 	if (argc != 5 && argc != 6)
-		write(2,"Error: more or less argument provied", 1);
+		write (2,"Error: more or less argument provied", 1);
 	i = 1;
 	data = malloc(sizeof(t_data));
 	if (data == NULL)

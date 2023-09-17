@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/13 22:31:50 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/15 19:39:20 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int	ft_fork_init(t_data *data)
 	i = 0;
 	while (i < data->phil_nbr)
 	{
-		pthread_mutex_init(&data->fork[i], NULL);
-		i++;
+		pthread_mutex_init(&data->philo[i].own_fork, NULL);
+		++i;
 	}
-	data->philo[0].left_fork = &data->fork[0];
-	data->philo[0].right_fork = &data->fork[0];
 	i = 0;
 	while (i < data->phil_nbr)
-	{
-		data->philo[i].left_fork = &data->fork[i];
-		data->philo[i].right_fork = &data->fork[(i + 1) % data->phil_nbr];
+	{	
+		if (i == data->phil_nbr - 1)
+			data->philo[i].neibor_fork = &data->philo[0].own_fork;
+		else
+			data->philo[i].neibor_fork = &data->philo[i + 1].own_fork;
 		++i;
 	}
 	return (0);
@@ -43,16 +43,13 @@ int	ft_init_data(t_data *data, char **argv)
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
-	data->start_time = ft_get_time();
 	if (argv[5])
 		data->max_to_eat = ft_atoi(argv[5]);
 	else
 		data->max_to_eat = INT_MAX;
-	pthread_mutex_init(&data->wait_to_print, NULL);
 	data->th_id = malloc(sizeof(pthread_t) * data->phil_nbr);
 	data->philo = malloc(sizeof(t_philo) * data->phil_nbr);
-	data->fork = malloc(sizeof(pthread_mutex_t) * data->phil_nbr);
-	if (!data->th_id || !data->philo || !data->fork)
+	if (!data->th_id || !data->philo)
 	{
 		perror("malloc");
 		exit(EXIT_FAILURE);
@@ -81,22 +78,24 @@ int	ft_init_philo(t_data *data)
 int	ft_create_each_philo(t_data *data)
 {
 	int			i;
-	// long int	time;
 
 	i = 0;
+	data->start_time = ft_get_time();
 	while (i < data->phil_nbr)
 	{
 		if (pthread_create(&data->th_id[i], NULL, &routine, &data->philo[i]))
 			return (1);
 		i++;
 	}
+	while (1)
+	{
+		printf("%d\t%d\n", check_if_dead(data->philo), check_if_all_ate(data->philo));
+		if (check_if_dead(data->philo) == 1 || check_if_all_ate(data->philo) == 1)
+		{
+			printf("%d\t%d\n", check_if_dead(data->philo), check_if_all_ate(data->philo));
+		}
+	}
 	i = 0;
-	// while (!data->philo[i % data->phil_nbr].philo_died && data->philo->last_eat)
-	// {
-	// 	time = ft_get_time() - data->philo[i % data->phil_nbr].last_eat;
-	// 	if (check_dead(&data->philo[i % data->phil_nbr], time))
-	// 		check_if_someone_died(&data->philo[i % data->phil_nbr]);
-	// }
 	while (i < data->phil_nbr)
 	{
 		if (pthread_join(data->th_id[i], NULL) != 0)
@@ -105,3 +104,10 @@ int	ft_create_each_philo(t_data *data)
 	}
 	return (0);
 }
+
+	// while (!data->philo[i % data->phil_nbr].philo_died && data->philo->last_eat)
+	// {
+	// 	time = ft_get_time() - data->philo[i % data->phil_nbr].last_eat;
+	// 	if (check_dead(&data->philo[i % data->phil_nbr], time))
+	// 		check_if_someone_died(&data->philo[i % data->phil_nbr]);
+	// }

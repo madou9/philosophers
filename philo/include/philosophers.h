@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/13 22:32:44 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/15 19:42:04 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,21 @@
 # include <unistd.h>
 # include <pthread.h>
 
-#define NC	"\e[0m"
-#define YELLOW	"\e[33m"
-#define BYELLOW	"\e[1;33m"
-#define RED	"\e[31m"
-#define GREEN	"\e[32m"
+#define PHILO_STATE_EATING 1
+#define PHILO_STATE_SLEEPING 2
+#define PHILO_STATE_THINKING 3
+#define PHILO_STATE_DEAD 4
 
 typedef struct s_philo
 {
 	struct s_data	*data;
 	long int		last_meal_time;
 	pthread_mutex_t	lock;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	wait_to_print;
+	pthread_mutex_t	own_fork;
+	pthread_mutex_t	*neibor_fork;
 	int				id;
+	int				state;
 	int				philo_died;
 	int				eating;
 	int				last_eat;
@@ -51,8 +52,6 @@ typedef struct s_data
 	long int		time_to_sleep;
 	long int		phil_nbr;
 	t_philo			*philo;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	wait_to_print;
 }					t_data;
 
 /*time thread */
@@ -69,7 +68,7 @@ void		check_if_someone_died(t_philo *philo);
 void		*routine(void *arg);
 int			ft_create_each_philo(t_data *data);
 void		ft_eat_meal(t_philo *philo);
-void		print_message(char *str, t_philo *philo);
+void		print_message(t_philo *philo, int state);
 
 /*take fork */
 void		drop_fork(t_philo *philo);
@@ -83,5 +82,8 @@ int			ft_atoi(char *str);
 int			ft_isdigit(int c);
 void 		ft_take_fork(t_philo *philo);
 
-int	check_dead(t_philo *philo, long int time);
+int			check_if_all_ate(t_philo *philo);
+int			philosopher_dead(t_philo *philo, long int time_to_die);
+int			check_if_dead(t_philo *philo);
+void		*monitor(void *pointer);
 #endif
