@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:18:06 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/22 16:31:56 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/22 20:25:19 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	print_message(t_philo *philo, int state)
 	timestamp = ft_get_time() - philo->data->start_time;
 	if (state == PHILO_STATE_EATING)
 	{
-		// pthread_mutex_lock(&philo->data->lock);
+		pthread_mutex_lock(&philo->data->lock);
 		printf("%ld\t%d has taken a fork\n", timestamp, id);
 		printf("%ld\t%d has taken a fork\n", timestamp, id);
 		printf("%ld\t%d is eating\n", timestamp, id);
-		// pthread_mutex_unlock(&philo->data->lock);
+		pthread_mutex_unlock(&philo->data->lock);
 	}
 	else if (state == PHILO_STATE_SLEEPING)
 		printf("%ld\t%d is sleeping\n", timestamp, id);
@@ -47,15 +47,19 @@ void	print_message(t_philo *philo, int state)
 
 void	ft_think(t_philo *philo)
 {
+	// pthread_mutex_lock(&philo->data->lock);
 	philo->state = PHILO_STATE_THINKING;
 	print_message(philo, philo->state);
+	// pthread_mutex_unlock(&philo->data->lock);
 }
 
 void	ft_sleep(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data->lock);
 	philo->state = PHILO_STATE_SLEEPING;
 	print_message(philo, philo->state);
 	ft_usleep(philo->data->time_to_sleep);
+	pthread_mutex_unlock(&philo->data->lock);
 }
 
 void	ft_take_fork(t_philo *philo)
@@ -78,6 +82,7 @@ void	ft_eat_meal(t_philo *philo)
 	philo->state = PHILO_STATE_EATING;
 	print_message(philo, philo->state);
 	pthread_mutex_lock(&philo->data->lock);
+	
 	philo->last_meal_time = ft_get_time();
 	philo->last_eat++;
 	pthread_mutex_unlock(&philo->data->lock);
