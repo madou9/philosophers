@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:18:06 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/22 15:08:01 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/22 16:31:56 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	print_message(t_philo *philo, int state)
 	timestamp = ft_get_time() - philo->data->start_time;
 	if (state == PHILO_STATE_EATING)
 	{
-		pthread_mutex_lock(&philo->data->lock);
+		// pthread_mutex_lock(&philo->data->lock);
 		printf("%ld\t%d has taken a fork\n", timestamp, id);
 		printf("%ld\t%d has taken a fork\n", timestamp, id);
 		printf("%ld\t%d is eating\n", timestamp, id);
-		pthread_mutex_unlock(&philo->data->lock);
+		// pthread_mutex_unlock(&philo->data->lock);
 	}
 	else if (state == PHILO_STATE_SLEEPING)
 		printf("%ld\t%d is sleeping\n", timestamp, id);

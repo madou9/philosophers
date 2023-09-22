@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/22 15:34:16 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/22 16:05:26 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	main(int argc, char **argv)
 	ft_init_philo(data);
 	ft_fork_init(data);
 	ft_create_each_philo(data);
-	if (check_if_someone_died(data))
-		cleanup(data);
+	// if (check_if_someone_died(data))
+	// 	cleanup(data);
 	cleanup(data);
 	return (0);
 }

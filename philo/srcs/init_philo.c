@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/21 20:50:22 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/22 16:02:41 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,18 @@ int	ft_init_philo(t_data *data)
 int	ft_create_each_philo(t_data *data)
 {
 	int			i;
+	pthread_t	observer;
 
 	i = 0;
 	data->start_time = ft_get_time();
 	while (i < data->phil_nbr)
 	{
-		if (pthread_create(&data->th_id[i], NULL, &routine, &data->philo[i]))
+		if (pthread_create(&data->th_id[i], NULL, &routine, &data->philo[i]) != 0)
 			return (1);
 		i++;
 	}
+	if (pthread_create(&observer, NULL, &monitor, data) != 0)
+		return (1);
 	i = 0;
 	while (i < data->phil_nbr)
 	{
@@ -94,12 +97,7 @@ int	ft_create_each_philo(t_data *data)
 			return (1);
 		i++;
 	}
+	if (pthread_join(observer, NULL) != 0)
+		return (1);
 	return (0);
 }
-
-	// while (!data->philo[i % data->phil_nbr].philo_died && data->philo->last_eat)
-	// {
-	// 	time = ft_get_time() - data->philo[i % data->phil_nbr].last_eat;
-	// 	if (check_dead(&data->philo[i % data->phil_nbr], time))
-	// 		check_if_someone_died(&data->philo[i % data->phil_nbr]);
-	// }

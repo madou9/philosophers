@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/22 15:33:25 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/22 16:05:15 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int			ft_init_data(t_data *data, char **argv);
 int			ft_init_philo(t_data *data);
 
 /*action routine */
-int			check_if_someone_died(t_data *data);
 void		*routine(void *arg);
 int			ft_create_each_philo(t_data *data);
 void		ft_eat_meal(t_philo *philo);
