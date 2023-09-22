@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/15 19:39:20 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/21 20:50:22 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_init_philo(t_data *data)
 		data->philo[i].last_eat = 0;
 		data->philo[i].philo_died = 0;
 		data->philo[i].last_meal_time = data->start_time;
-		pthread_mutex_init(&data->philo->lock, NULL);
+		pthread_mutex_init(&data->lock, NULL);
 	}
 	return (0);
 }
@@ -86,14 +86,6 @@ int	ft_create_each_philo(t_data *data)
 		if (pthread_create(&data->th_id[i], NULL, &routine, &data->philo[i]))
 			return (1);
 		i++;
-	}
-	while (1)
-	{
-		printf("%d\t%d\n", check_if_dead(data->philo), check_if_all_ate(data->philo));
-		if (check_if_dead(data->philo) == 1 || check_if_all_ate(data->philo) == 1)
-		{
-			printf("%d\t%d\n", check_if_dead(data->philo), check_if_all_ate(data->philo));
-		}
 	}
 	i = 0;
 	while (i < data->phil_nbr)

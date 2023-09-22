@@ -8,7 +8,7 @@ INCLUDE = include/
 
 SRCS = srcs/
 
-SRC = $(SRCS)main.c $(SRCS)init_philo.c $(SRCS)time_philo.c $(SRCS)philo_eat.c $(SRCS)routine.c $(SRCS)utils.c $(SRCS)ft_take_fork.c $(SRCS)ft_free.c $(SRCS)check_philo.c\
+SRC = $(SRCS)main.c $(SRCS)init_philo.c $(SRCS)time_philo.c $(SRCS)philo_eat.c $(SRCS)check_philo.c $(SRCS)routine.c $(SRCS)utils.c $(SRCS)ft_take_fork.c $(SRCS)ft_free.c \
 
 OBJS = ${SRC:.c=.o}
 
