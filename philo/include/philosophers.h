@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/22 16:05:15 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/24 19:14:08 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,16 @@
 # include <unistd.h>
 # include <pthread.h>
 
-#define PHILO_STATE_EATING 	 1
-#define PHILO_STATE_SLEEPING 2
-#define PHILO_STATE_THINKING 3
-#define PHILO_STATE_DEAD 	 4
+// #define PHILO_STATE_EATING 	 1
+// #define PHILO_STATE_SLEEPING 2
+// #define PHILO_STATE_THINKING 3
+// #define PHILO_STATE_DEAD 	 4
+
+# define TAKE_FORKS "has taken a fork"
+# define THINK "is thinking"
+# define SLEEP "is sleeping"
+# define EAT "is eating"
+# define DIED "died"
 
 typedef struct s_philo
 {
@@ -33,8 +39,8 @@ typedef struct s_philo
 	pthread_mutex_t	*neibor_fork;
 	long int		last_meal_time;
 	int				id;
+	long			death_time;
 	int				state;
-	int				philo_died;
 	int				eating;
 	int				last_eat;
 }	t_philo;
@@ -45,7 +51,10 @@ typedef struct s_data
 	pthread_t		*th_id;
 	pthread_t		*ckeck_vie;
 	pthread_mutex_t	lock;
+	pthread_mutex_t	last_meal;
+	pthread_mutex_t	wait_print;
 	int				flag;
+	int				philo_died;
 	long int		time_to_eat;
 	long int		max_to_eat;
 	long int		time_to_die;
@@ -67,7 +76,7 @@ int			ft_init_philo(t_data *data);
 void		*routine(void *arg);
 int			ft_create_each_philo(t_data *data);
 void		ft_eat_meal(t_philo *philo);
-void		print_message(t_philo *philo, int state);
+void		print_message(char *str, t_philo *philo, int id);
 
 /*take fork */
 void		ft_think(t_philo *philo);
@@ -79,9 +88,7 @@ int			ft_atoi(char *str);
 int			ft_isdigit(int c);
 void		ft_take_fork(t_philo *philo);
 
-int			check_if_all_ate(t_philo *philo);
-int			philosopher_dead(t_philo *philo, long int time_to_die);
-int			check_if_dead(t_philo *philo);
 void		*monitor(void *pointer);
 int			ft_check_number(int argc, char **argv);
+int	check_someone_died(t_philo *philo);
 #endif

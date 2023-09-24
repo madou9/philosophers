@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/22 16:05:26 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/24 14:09:05 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,11 @@ int	main(int argc, char **argv)
 	ft_check_number(argc, argv);
 	i = 1;
 	data = malloc(sizeof(t_data));
-	if (data == NULL)
-		exit(1);
+	data->philo_died = 0;
 	ft_init_data(data, argv);
 	ft_init_philo(data);
 	ft_fork_init(data);
 	ft_create_each_philo(data);
-	// if (check_if_someone_died(data))
-	// 	cleanup(data);
 	cleanup(data);
 	return (0);
 }
