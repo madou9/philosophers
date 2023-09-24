@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/24 19:14:08 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/24 20:15:37 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 # include <limits.h>
 # include <unistd.h>
 # include <pthread.h>
-
-// #define PHILO_STATE_EATING 	 1
-// #define PHILO_STATE_SLEEPING 2
-// #define PHILO_STATE_THINKING 3
-// #define PHILO_STATE_DEAD 	 4
 
 # define TAKE_FORKS "has taken a fork"
 # define THINK "is thinking"
@@ -90,5 +85,5 @@ void		ft_take_fork(t_philo *philo);
 
 void		*monitor(void *pointer);
 int			ft_check_number(int argc, char **argv);
-int	check_someone_died(t_philo *philo);
+int			check_someone_died(t_philo *philo);
 #endif
