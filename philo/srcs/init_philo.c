@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/24 20:16:34 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/25 20:18:44 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,24 +82,24 @@ int	ft_create_each_philo(t_data *data)
 	int			i;
 	pthread_t	observer;
 
-	i = 0;
+	i = -1;
 	data->start_time = ft_get_time();
-	while (i < data->phil_nbr)
+	while (++i < data->phil_nbr)
 	{
 		if (pthread_create(&data->th_id[i], NULL, &routine, &data->philo[i]) != 0)
-			return (1);
-		i++;
+			cleanup(data);
 	}
 	if (pthread_create(&observer, NULL, &monitor, data) != 0)
-		return (1);
+		cleanup(data);
 	i = 0;
 	while (i < data->phil_nbr)
 	{
 		if (pthread_join(data->th_id[i], NULL) != 0)
-			return (1);
+			cleanup(data);
 		i++;
+		// printf("here: ft_create_each_philo\n");
 	}
 	if (pthread_join(observer, NULL) != 0)
-		return (1);
+		cleanup(data);
 	return (0);
 }

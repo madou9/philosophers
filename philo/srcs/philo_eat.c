@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:18:06 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/24 20:35:39 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/25 20:47:53 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_message(char *str, t_philo *philo, int id)
 
 	pthread_mutex_lock(&philo->data->wait_print);
 	timestamp = ft_get_time() - philo->data->start_time;
-	if (!philo->data->philo_died)
+	if (!check_someone_died(philo))
 		printf("%ld %d %s\n", timestamp, id, str);
 	pthread_mutex_unlock(&philo->data->wait_print);
 }
@@ -58,8 +58,8 @@ void	ft_eat_meal(t_philo *philo)
 	print_message(EAT, philo, philo->id);
 	pthread_mutex_lock(&philo->data->last_meal);
 	philo->last_meal_time = ft_get_time();
-	philo->last_eat++;
 	pthread_mutex_unlock(&philo->data->last_meal);
+	philo->last_eat++;
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->neibor_fork);
 	pthread_mutex_unlock(&philo->own_fork);

@@ -6,6 +6,8 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g -I$(INCLUDE)
 
 INCLUDE = include/
 
+# -fsanitize=thread -g
+
 SRCS = srcs/
 
 SRC = $(SRCS)main.c $(SRCS)init_philo.c $(SRCS)time_philo.c $(SRCS)philo_eat.c $(SRCS)check_philo.c $(SRCS)routine.c $(SRCS)utils.c $(SRCS)ft_take_fork.c $(SRCS)ft_free.c \
