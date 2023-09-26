@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:51:27 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/25 20:48:03 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/26 20:20:00 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void		ft_sleep(t_philo *philo);
 void		cleanup(t_data *data);
 int			ft_atoi(char *str);
 int			ft_isdigit(int c);
-void		ft_take_fork(t_philo *philo);
 
 void		*monitor(void *pointer);
 int			ft_check_number(int argc, char **argv);
 int	check_someone_died(t_philo *philo);
-int	check_dead(t_philo *philo, long time_to_die);
+int	check_dead(t_philo *philo, long int time_to_die);
+int	check_if_dead(t_philo *philos);
 #endif

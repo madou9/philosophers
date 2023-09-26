@@ -2,7 +2,7 @@ NAME = philo
 
 CC   = cc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g -I$(INCLUDE)
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDE)
 
 INCLUDE = include/
 

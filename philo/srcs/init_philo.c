@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/25 20:18:44 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/26 20:22:26 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_init_data(t_data *data, char **argv)
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
+	data->start_time = ft_get_time();
 	if (argv[5])
 		data->max_to_eat = ft_atoi(argv[5]);
 	else
@@ -61,15 +62,16 @@ int	ft_init_philo(t_data *data)
 {
 	int	i;
 
-	i = -1;
-	while (++i < data->phil_nbr)
+	i = 0;
+	while (i < data->phil_nbr)
 	{
 		data->philo[i].data = data;
 		data->philo[i].id = i + 1;
 		data->philo[i].eating = 0;
 		data->philo[i].last_eat = 0;
 		data->philo[i].death_time = data->time_to_die;
-		data->philo[i].last_meal_time = data->start_time;
+		data->philo[i].last_meal_time = ft_get_time();
+		i++;
 	}
 	pthread_mutex_init(&data->lock, NULL);
 	pthread_mutex_init(&data->wait_print, NULL);
@@ -80,26 +82,27 @@ int	ft_init_philo(t_data *data)
 int	ft_create_each_philo(t_data *data)
 {
 	int			i;
-	pthread_t	observer;
+	t_philo 	*philo;
 
-	i = -1;
-	data->start_time = ft_get_time();
-	while (++i < data->phil_nbr)
+	philo = data->philo;
+	i = 0;
+	while (i < data->phil_nbr)
 	{
 		if (pthread_create(&data->th_id[i], NULL, &routine, &data->philo[i]) != 0)
 			cleanup(data);
+		i++;
 	}
-	if (pthread_create(&observer, NULL, &monitor, data) != 0)
-		cleanup(data);
+	while (1)
+	{
+		if (check_if_dead(philo) == 1)
+			break ;
+	}
 	i = 0;
 	while (i < data->phil_nbr)
 	{
 		if (pthread_join(data->th_id[i], NULL) != 0)
 			cleanup(data);
 		i++;
-		// printf("here: ft_create_each_philo\n");
 	}
-	if (pthread_join(observer, NULL) != 0)
-		cleanup(data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:53:03 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/25 15:14:13 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/26 20:20:30 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 // time in milliseconds.
 long int	ft_get_time(void)
 {
-	struct timeval	valu_time;
+	struct timeval	time_val;
 
-	gettimeofday(&valu_time, NULL);
-	return ((valu_time.tv_sec * 1000) + (valu_time.tv_usec / 1000));
+	if (gettimeofday(&time_val, NULL))
+		return (1);
+	return ((time_val.tv_sec * 1000) + (time_val.tv_usec / 1000));
 }
 
 // ft_usleep is a function that sleeps for a specified amount of time.
@@ -43,3 +44,4 @@ int	ft_usleep(useconds_t usec)
 	}
 	return (0);
 }
+
