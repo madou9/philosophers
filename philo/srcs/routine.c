@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:53:07 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/26 20:19:51 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/27 13:27:03 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	*routine(void *arg)
 	}
 	if (philo->data->phil_nbr == 1)
 		print_message(DIED, philo, philo->id);
+	philo->data->philo_died = 1;
 	return (arg);
 }
