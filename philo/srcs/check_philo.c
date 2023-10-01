@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:33 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/27 12:04:57 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/30 13:14:50 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	check_if_dead(t_philo *philo)
 	data = philo->data;
 	while (i < philo->data->phil_nbr)
 	{
-		pthread_mutex_lock(&philo->data->wait_print);
+		pthread_mutex_lock(&philo->data->last_meal);
 		t = philo->last_meal_time;
-		pthread_mutex_unlock(&philo->data->wait_print);
-		if (ft_get_time() - t >= philo->data->time_to_die && philo->eating == 0)
+		pthread_mutex_unlock(&philo->data->last_meal);
+		if (ft_get_time() - t >= philo->data->time_to_die)
 		{
 			print_message(DIED, &philo[i], philo[i].id);
 			pthread_mutex_lock(&philo->data->lock);

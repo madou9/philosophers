@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:53:07 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/27 13:27:03 by ihama            ###   ########.fr       */
+/*   Updated: 2023/09/30 13:16:06 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->data->time_to_eat);
-	while (!check_someone_died(philo) && (philo->data->max_to_eat > philo->last_eat)
+	while (!check_someone_died(philo) && \
+		(philo->data->max_to_eat >= philo->last_eat)
 		&& philo->data->phil_nbr != 1)
 	{
 		ft_eat_meal(philo);
@@ -36,7 +37,12 @@ void	*routine(void *arg)
 		ft_think(philo);
 	}
 	if (philo->data->phil_nbr == 1)
+	{
+		print_message(TAKE_FORKS, philo, philo->id);
 		print_message(DIED, philo, philo->id);
+	}
+	pthread_mutex_lock(&philo->data->lock);
 	philo->data->philo_died = 1;
+	pthread_mutex_unlock(&philo->data->lock);
 	return (arg);
 }

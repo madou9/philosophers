@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/26 20:22:11 by ihama            ###   ########.fr       */
+/*   Updated: 2023/10/01 13:13:38 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,15 @@ int	ft_check_number(int argc, char **argv)
 	return (0);
 }
 
+// void	leaks(void)
+// {
+// 	system("leaks philo");
+// }
+// 	atexit(&leaks);
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
-	t_philo *philo;
 	int		i;
 
 	if (argc != 5 && argc != 6)
@@ -49,8 +54,12 @@ int	main(int argc, char **argv)
 	ft_check_number(argc, argv);
 	i = 1;
 	data = malloc(sizeof(t_data));
+	if (data == NULL)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
 	data->philo_died = 0;
-	philo = data->philo;
 	ft_init_data(data, argv);
 	ft_init_philo(data);
 	ft_fork_init(data);
