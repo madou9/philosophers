@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/10/01 13:13:38 by ihama            ###   ########.fr       */
+/*   Updated: 2023/10/01 15:24:05 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void	error(void)
 {
-	write (2, "Error: more or less argument provied", 36);
+	write (2, "Error\n", 6);
+	exit(1);
+}
+
+void	error_1(void)
+{
+	write (2, "Error: The project said no more than 200 philosophers!\n", 55);
 	exit(1);
 }
 
@@ -51,6 +57,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 		error();
+	if (ft_atoi(argv[1]) > 200)
+		error_1();
 	ft_check_number(argc, argv);
 	i = 1;
 	data = malloc(sizeof(t_data));
