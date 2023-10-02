@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:18:06 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/27 13:22:05 by ihama            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:35:33 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	ft_sleep(t_philo *philo)
 void	ft_eat_meal(t_philo *philo)
 {
 	pthread_mutex_lock(philo->neibor_fork);
-	print_message(TAKE_FORKS, philo, philo->id);
+	print_message(FORKS, philo, philo->id);
 	pthread_mutex_lock(&philo->own_fork);
-	print_message(TAKE_FORKS, philo, philo->id);
+	print_message(FORKS, philo, philo->id);
 	print_message(EAT, philo, philo->id);
 	pthread_mutex_lock(&philo->data->last_meal);
 	philo->last_meal_time = ft_get_time();

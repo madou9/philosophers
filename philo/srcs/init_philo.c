@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/10/01 13:04:31 by ihama            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:28:24 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,16 @@ int	ft_fork_init(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->phil_nbr)
-	{
+	i = -1;
+	while (++i < data->phil_nbr)
 		pthread_mutex_init(&data->philo[i].own_fork, NULL);
-		++i;
-	}
-	i = 0;
-	while (i < data->phil_nbr)
+	i = -1;
+	while (++i < data->phil_nbr)
 	{	
 		if (i == data->phil_nbr - 1)
 			data->philo[i].neibor_fork = &data->philo[0].own_fork;
 		else
 			data->philo[i].neibor_fork = &data->philo[i + 1].own_fork;
-		++i;
 	}
 	return (0);
 }
@@ -62,8 +58,8 @@ int	ft_init_philo(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->phil_nbr)
+	i = -1;
+	while (++i < data->phil_nbr)
 	{
 		data->philo[i].data = data;
 		data->philo[i].id = i + 1;
@@ -71,7 +67,6 @@ int	ft_init_philo(t_data *data)
 		data->philo[i].last_eat = 0;
 		data->philo[i].death_time = data->time_to_die;
 		data->philo[i].last_meal_time = ft_get_time();
-		i++;
 	}
 	pthread_mutex_init(&data->lock, NULL);
 	pthread_mutex_init(&data->wait_print, NULL);
@@ -85,25 +80,23 @@ int	ft_create_each_philo(t_data *data)
 	t_philo	*philo;
 
 	philo = data->philo;
-	i = 0;
-	while (i < data->phil_nbr)
+	i = -1;
+	while (++i < data->phil_nbr)
 	{
 		if (pthread_create(&data->th_id[i], NULL,
 				&routine, &data->philo[i]) != 0)
 			cleanup(data);
-		i++;
 	}
 	while (1)
 	{
 		if (check_if_dead(philo) == 1)
 			break ;
 	}
-	i = 0;
-	while (i < data->phil_nbr)
+	i = -1;
+	while (++i < data->phil_nbr)
 	{
 		if (pthread_join(data->th_id[i], NULL) != 0)
 			cleanup(data);
-		i++;
 	}
 	return (0);
 }

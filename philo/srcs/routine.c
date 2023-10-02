@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:53:07 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/30 13:16:06 by ihama            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:56:13 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*routine(void *arg)
 	}
 	if (philo->data->phil_nbr == 1)
 	{
-		print_message(TAKE_FORKS, philo, philo->id);
+		print_message(FORKS, philo, philo->id);
 		print_message(DIED, philo, philo->id);
 	}
 	pthread_mutex_lock(&philo->data->lock);
