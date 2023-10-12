@@ -6,17 +6,12 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:53:03 by ihama             #+#    #+#             */
-/*   Updated: 2023/09/30 12:49:15 by ihama            ###   ########.fr       */
+/*   Updated: 2023/10/10 11:24:32 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// ft_get_time is a function that returns the current time in milliseconds 
-// using the gettimeofday function, which is a function that returns the current
-// time in seconds and microseconds. We multiply the seconds by 1000 to get the
-// time in milliseconds, and then divide the microseconds by 1000 to get the
-// time in milliseconds.
 long int	ft_get_time(void)
 {
 	struct timeval	time_val;
@@ -25,10 +20,6 @@ long int	ft_get_time(void)
 		return (1);
 	return ((time_val.tv_sec * 1000) + (time_val.tv_usec / 1000));
 }
-
-// ft_usleep is a function that sleeps for a specified amount of time.
-// It takes a time in microseconds (time) as an argument and delays the
-// execution of the program for that amount of time. It returns 0.
 
 int	ft_usleep(useconds_t usec)
 {

@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:09 by ihama             #+#    #+#             */
-/*   Updated: 2023/10/01 15:24:05 by ihama            ###   ########.fr       */
+/*   Updated: 2023/10/10 11:42:08 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,16 @@ int	ft_check_number(int argc, char **argv)
 // }
 // 	atexit(&leaks);
 
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
-	int		i;
 
 	if (argc != 5 && argc != 6)
 		error();
 	if (ft_atoi(argv[1]) > 200)
 		error_1();
 	ft_check_number(argc, argv);
-	i = 1;
 	data = malloc(sizeof(t_data));
 	if (data == NULL)
 	{

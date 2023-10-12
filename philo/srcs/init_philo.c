@@ -6,7 +6,7 @@
 /*   By: ihama <ihama@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 16:52:05 by ihama             #+#    #+#             */
-/*   Updated: 2023/10/02 14:28:24 by ihama            ###   ########.fr       */
+/*   Updated: 2023/10/07 14:40:20 by ihama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_fork_init(t_data *data)
 		pthread_mutex_init(&data->philo[i].own_fork, NULL);
 	i = -1;
 	while (++i < data->phil_nbr)
-	{	
+	{
 		if (i == data->phil_nbr - 1)
 			data->philo[i].neibor_fork = &data->philo[0].own_fork;
 		else
