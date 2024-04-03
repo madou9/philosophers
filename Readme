@@ -1,0 +1,42 @@
+# Dining Philosophers Simulation
+
+## Overview
+
+This project is a simulation of the dining philosophers problem, a classic problem in computer science and concurrency theory. The goal of the project is to demonstrate concepts related to concurrency, synchronization, and mutual exclusion.
+
+## Problem Description
+
+In the dining philosophers problem, a group of philosophers sit around a dining table with a bowl of spaghetti in front of each of them. There are forks placed between each pair of adjacent philosophers. The philosophers spend their time either thinking or eating, but to eat, a philosopher must pick up the two forks adjacent to them. The challenge is to design a solution that prevents deadlock and ensures that the philosophers can all eat without starving or causing conflicts over the forks.
+
+## Implementation
+
+The project consists of several components:
+
+- `ft_init_data()`: Initializes the data structure containing parameters such as the number of philosophers, time constraints for eating, sleeping, and thinking, and the maximum number of times a philosopher can eat.
+- `ft_init_philo()`: Initializes each philosopher with the appropriate values and initializes mutex locks for synchronization.
+- `ft_fork_init()`: Initializes the mutex locks representing the forks.
+- `ft_create_each_philo()`: Creates threads for each philosopher and starts their execution.
+
+## Usage
+
+To run the simulation, follow these steps:
+
+1. Compile the program using the provided makefile or build script.
+
+2. Execute the compiled binary, passing the necessary command-line arguments:
+
+- `<number_of_philosophers>`: The number of philosophers sitting around the table.
+- `<time_to_die>`: The time in milliseconds after which a philosopher dies if they have not started eating.
+- `<time_to_eat>`: The time in milliseconds it takes for a philosopher to finish eating.
+- `<time_to_sleep>`: The time in milliseconds it takes for a philosopher to fall asleep after eating.
+- `[number_of_times_each_philosopher_must_eat]` (optional): The maximum number of times each philosopher must eat before the simulation stops.
+
+3. The program will simulate the dining philosophers problem according to the provided parameters.
+
+## Building
+
+To build the project, use the provided makefile or build script:
+
+## Contact
+
+If you have any questions or suggestions regarding the Dining Philosophers Simulation project, feel free to contact the maintainer at [issoufouh377@gmail.com].
